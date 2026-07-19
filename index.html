@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Survei IKM SD Negeri 1 Cijawa</title>
+<style>
+:root {
+  --biru: #004aad;
+  --putih: #ffffff;
+  --oranye: #f7931e;
+  --emas: #d4af37;
+  --abu: #f5f6fa;
+  --hijau: #90EE90;
+  --bayangan: rgba(0,0,0,0.1);
+}
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background-color: var(--abu);
+  color: #333;
+}
+header {
+  background-color: var(--biru);
+  color: var(--putih);
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 2px 6px var(--bayangan);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+header img {
+  height: 60px;
+  margin-right: 15px;
+}
+header h1 {
+  flex: 1;
+  text-align: center;
+  font-size: 1.2rem;
+  margin: 0;
+}
+header a {
+  background-color: var(--oranye);
+  color: var(--putih);
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-size: 0.9rem;
+}
+header a:hover {
+  background-color: var(--emas);
+}
+.container {
+  max-width: 900px;
+  margin: 2rem auto;
+  background: var(--putih);
+  border-radius: 10px;
+  box-shadow: 0 4px 10px var(--bayangan);
+  padding: 2rem;
+  animation: fadeIn 0.5s ease;
+}
+@keyframes fadeIn {
+  from {opacity: 0; transform: translateY(10px);}
+  to {opacity: 1; transform: translateY(0);}
+}
+button {
+  background-color: var(--oranye);
+  color: var(--putih);
+  border: none;
+  padding: 0.8rem 1.5rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+button:hover {
+  background-color: var(--emas);
+}
+.card {
+  background: var(--putih);
+  border-radius: 10px;
+  box-shadow: 0 2px 6px var(--bayangan);
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+input[type="text"], input[type="password"], select {
+  width: 100%;
+  padding: 0.6rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  margin-top: 0.3rem;
+}
+.radio-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+.scale {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 0.5rem;
+}
+.scale label {
+  flex: 1;
+  text-align: center;
+}
+.scale-info {
+  font-size: 0.8rem;
+  color: #777;
+  text-align: center;
+  margin-top: 0.3rem;
+}
+.progress {
+  height: 10px;
+  background: #ddd;
+  border-radius: 5px;
+  overflow: hidden;
+  margin-top: 1rem;
+}
+.progress-bar {
+  height: 10px;
+  background: var(--oranye);
+  width: 0%;
+  transition: width 0.5s ease;
+}
+#gauge {
+  width: 200px;
+  height: 100px;
+  margin: 1rem auto;
+}
+.result {
+  text-align: center;
+}
+.hidden {
+  display: none;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+th, td {
+  border: 1px solid #ccc;
+  padding: 0.5rem;
+  text-align: center;
+}
+th {
+  background-color: var(--biru);
+  color: var(--putih);
+}
+.filter {
+  margin-bottom: 1rem;
+}
+.stats-card {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  overflow: hidden;
+  margin-top: 1rem;
+}
+.stats-header {
+  background-color: var(--biru);
+  color: var(--putih);
+  text-align: center;
+  padding: 0.5rem;
+  font-weight: bold;
+}
+.stats-section {
+  background-color: var(--hijau);
+  text-align: center;
+  font-weight: bold;
+  padding: 0.5rem;
+}
+.stats-content {
+  background-color: var(--putih);
+  text-align: center;
+  padding: 0.5rem;
+}
+#loading {
+  display: none;
+  text-align: center;
+  font-weight: bold;
+  color: var(--biru);
+}
+@media (max-width:600px){
+  header img {height: 50px;}
+  header h1 {font-size: 1rem;}
+  .container {margin: 1rem;}
+  table {font-size: 0.8rem;}
+}
+</style>
+</head>
+<body>
+<header>
+  <img src="logo-sd.png" alt="Logo SD Negeri 1 Cijawa">
+  <h1>SURVEI INDEKS KEPUASAN MASYARAKAT (IKM)</h1>
+  <a href="#" onclick="goTo('loginPage')">Login Admin</a>
+</header>
+
+<div class="container" id="homePage">
+  <h2 style="color:var(--biru);text-align:center;">SD NEGERI 1 CIJAWA</h2>
+  <p style="text-align:center;">Kecamatan Cipeundeuy • Kabupaten Bandung Barat</p>
+  <p style="text-align:center;">Selamat datang pada Survei Indeks Kepuasan Masyarakat SD Negeri 1 Cijawa. Pendapat Anda sangat berarti bagi kami dalam meningkatkan kualitas pelayanan pendidikan. Mohon mengisi survei sesuai dengan pengalaman yang Anda rasakan.</p>
+  <div style="text-align:center;">
+    <button onclick="goTo('respondentPage')">Mulai Survei</button>
+  </div>
+</div>
+
+<div class="container hidden" id="loginPage">
+  <h2 style="color:var(--biru);text-align:center;">Login Admin</h2>
+  <div class="card">
+    <label>Username</label>
+    <input type="text" id="adminUser" placeholder="Masukkan username">
+  </div>
+  <div class="card">
+    <label>Password</label>
+    <input type="password" id="adminPass" placeholder="Masukkan password">
+  </div>
+  <div style="text-align:center;">
+    <button onclick="loginAdmin()">Login</button>
+    <button style="background-color:gray;margin-left:10px;" onclick="goTo('homePage')">Kembali</button>
+  </div>
+</div>
+
+<div class="container hidden" id="respondentPage">
+  <h2 style="color:var(--biru);text-align:center;">Data Responden</h2>
+  <div class="card">
+    <label>Nama (opsional)</label>
+    <input type="text" id="nama">
+  </div>
+  <div class="card">
+    <label>Jenis Kelamin</label>
+    <div class="radio-group">
+      <label><input type="radio" name="gender" value="L"> Laki-laki</label>
+      <label><input type="radio" name="gender" value="P"> Perempuan</label>
+    </div>
+  </div>
+  <div class="card">
+    <label>Pendidikan</label>
+    <select id="pendidikan">
+      <option value="">Pilih Pendidikan</option>
+      <option value="SD Kebawah">SD Kebawah</option>
+      <option value="SLTP">SLTP</option>
+      <option value="SLTA">SLTA</option>
+      <option value="D1-D2-D3">D1-D2-D3</option>
+      <option value="S-1">S-1</option>
+      <option value="S-2">S-2</option>
+      <option value="S-3">S-3</option>
+    </select>
+  </div>
+  <div class="card">
+    <label>Status</label>
+    <div class="radio-group">
+      <label><input type="radio" name="status" value="Orang Tua/Wali"> Orang Tua/Wali</label>
+      <label><input type="radio" name="status" value="Peserta Didik"> Peserta Didik</label>
+      <label><input type="radio" name="status" value="Guru"> Guru</label>
+      <label><input type="radio" name="status" value="Komite Sekolah"> Komite Sekolah</label>
+      <label><input type="radio" name="status" value="Masyarakat"> Masyarakat</label>
+    </div>
+  </div>
+  <div style="text-align:center;">
+    <button onclick="goTo('surveyPage')">Lanjutkan</button>
+  </div>
+</div>
+
+<div class="container hidden" id="surveyPage">
+  <h2 style="color:var(--biru);text-align:center;">Kuesioner Survei</h2>
+  <form id="surveyForm"></form>
+  <div style="text-align:center;">
+    <button type="button" onclick="calculateIKM()">Kirim</button>
+  </div>
+</div>
+
+<div class="container hidden" id="resultPage">
+  <h2 style="color:var(--biru);text-align:center;">Hasil Survei IKM</h2>
+  <div id="gauge"></div>
+  <div class="result">
+    <h3>Nilai IKM: <span id="ikmValue">0</span></h3>
+    <h4>Kategori: <span id="ikmCategory">-</span></h4>
+  </div>
+  <div class="progress">
+    <div class="progress-bar" id="progressBar"></div>
+  </div>
+  <div id="breakdown"></div>
+  <div style="text-align:center;margin-top:1rem;">
+    <button onclick="goTo('homePage')">Kembali ke Beranda</button>
+  </div>
+</div>
+
+<div class="container hidden" id="dashboardPage">
+  <h2 style="color:var(--biru);text-align:center;">Dashboard Admin</h2>
+  <div style="text-align:right;margin-bottom:1rem;">
+    <button onclick="logoutAdmin()">Logout</button>
+  </div>
+  <div id="loading">Memuat data dari Google Sheets...</div>
+  <div class="filter">
+    <label>Filter Status: </label>
+    <select id="filterStatus" onchange="renderDashboard()">
+      <option value="all">Semua</option>
+      <option value="Orang Tua/Wali">Orang Tua/Wali</option>
+      <option value="Peserta Didik">Peserta Didik</option>
+      <option value="Guru">Guru</option>
+      <option value="Komite Sekolah">Komite Sekolah</option>
+      <option value="Masyarakat">Masyarakat</option>
+    </select>
+    <button onclick="exportCSV()">Export CSV</button>
+  </div>
+  <div id="dashboardStats"></div>
+  <table id="respondentTable">
+    <thead>
+      <tr><th>Nama</th><th>Status</th><th>Jenis Kelamin</th><th>Pendidikan</th><th>Nilai IKM</th><th>Tanggal</th></tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+  <div id="averageBreakdown"></div>
+  <div id="respondentStats"></div>
+</div>
+
+<script>
+// ==========================
+// BAGIAN 1: KONFIGURASI DASAR
+// ==========================
+
+// !!! PENTING !!!
+// MASUKKAN URL WEB APP GOOGLE SHEETS DI SINI
+// Contoh format URL yang benar:
+// const scriptURL = 'https://script.google.com/macros/s/AKfycbz5ml0knToRwiomvjjGuDn_eTmJLOyYsZuYfenyIFAChtL8GPpOw5uWdqNTCMFZFJch/exec';
+const scriptURL = 'https://script.google.com/macros/s/AKfycbz5ml0knToRwiomvjjGuDn_eTmJLOyYsZuYfenyIFAChtL8GPpOw5uWdqNTCMFZFJch/exec'; // <--- GANTI BAGIAN INI DENGAN URL WEB APP ANDA
+
+// ==========================
+// BAGIAN 2: FORM SURVEI
+// ==========================
+const questions=[
+  'Persyaratan layanan','Prosedur/kemudahan alur layanan','Kecepatan waktu pelayanan','Biaya/Tarif pelayanan','Kesesuaian produk/hasil pelayanan','Kompetensi/kemampuan pelaksana','Perilaku pelaksana','Kualitas sarana dan prasarana','Penanganan pengaduan/saran/masukan'
+];
+const form=document.getElementById('surveyForm');
+questions.forEach((q,i)=>{
+  const div=document.createElement('div');
+  div.className='card';
+  div.innerHTML=`<label>${i+1}. ${q}</label>
+  <div class="scale">
+    <label><input type="radio" name="q${i+1}" value="1">1</label>
+    <label><input type="radio" name="q${i+1}" value="2">2</label>
+    <label><input type="radio" name="q${i+1}" value="3">3</label>
+    <label><input type="radio" name="q${i+1}" value="4">4</label>
+  </div>
+  <div class="scale-info">Nilai 1: Tidak Baik | Nilai 2: Kurang Baik | Nilai 3: Baik | Nilai 4: Sangat Baik</div>`;
+  form.appendChild(div);
+});
+function goTo(pageId){
+  document.querySelectorAll('.container').forEach(c=>c.classList.add('hidden'));
+  document.getElementById(pageId).classList.remove('hidden');
+}
+function calculateIKM(){
+  const nama=document.getElementById('nama').value||'-';
+  const status=document.querySelector('input[name="status"]:checked');
+  const gender=document.querySelector('input[name="gender"]:checked');
+  const pendidikan=document.getElementById('pendidikan').value;
+  if(!status||!gender||!pendidikan){alert('Lengkapi data responden.');return;}
+  const values=[];
+  for(let i=1;i<=9;i++){
+    const val=form['q'+i].value;
+    if(!val){alert('Mohon isi semua pertanyaan.');return;}
+    values.push(parseInt(val));
+  }
+  const avg=values.reduce((a,b)=>a+b,0)/values.length;
+  const ikm=avg*25;
+  let kategori='';
+  if(ikm<=43.75) kategori='Tidak Baik';
+  else if(ikm<=62.5) kategori='Kurang Baik';
+  else if(ikm<=81.25) kategori='Baik';
+  else kategori='Sangat Baik';
+  document.getElementById('ikmValue').textContent=ikm.toFixed(2);
+  document.getElementById('ikmCategory').textContent=kategori;
+  document.getElementById('progressBar').style.width=ikm+'%';
+  let breakdownHTML='<h4>Rincian Nilai per Unsur:</h4><ul>';
+  values.forEach((v,i)=>{breakdownHTML+=`<li>${questions[i]}: ${v}</li>`;});
+  breakdownHTML+='</ul>';
+  document.getElementById('breakdown').innerHTML=breakdownHTML;
+  sendToGoogleSheet({nama,gender:gender.value,pendidikan,status:status.value,unsur:values,ikm:ikm.toFixed(2),tanggal:new Date().toLocaleString()});
+  goTo('resultPage');
+  drawGauge(ikm);
+}
+function drawGauge(value){
+  const canvas=document.createElement('canvas');
+  canvas.width=200;canvas.height=100;
+  const ctx=canvas.getContext('2d');
+  const centerX=100,centerY=100,radius=80;
+  ctx.clearRect(0,0,200,100);
+  ctx.beginPath();
+  ctx.arc(centerX,centerY,radius,Math.PI,0);
+  ctx.strokeStyle='#ddd';
+  ctx.lineWidth=15;
+  ctx.stroke();
+  const endAngle=Math.PI+(value/100)*Math.PI;
+  ctx.beginPath();
+  ctx.arc(centerX,centerY,radius,Math.PI,endAngle);
+  ctx.strokeStyle= value>81.25? '#4caf50': value>62.5? '#2196f3': value>43.75? '#ff9800':'#f44336';
+  ctx.lineWidth=15;
+  ctx.stroke();
+  document.getElementById('gauge').innerHTML='';
+  document.getElementById('gauge').appendChild(canvas);
+}
+function sendToGoogleSheet(data){
+  fetch(scriptURL,{
+    method:'POST',
+    body:JSON.stringify(data),
+    headers:{'Content-Type':'application/json'}
+  }).catch(()=>alert('Gagal mengirim data ke Google Sheets'));
+}
+
+// ==========================
+// BAGIAN 3: LOGIN ADMIN & DASHBOARD
+// ==========================
+function loginAdmin(){
+  const user=document.getElementById('adminUser').value;
+  const pass=document.getElementById('adminPass').value;
+  if(user==='admin' && pass==='admin123'){
+    sessionStorage.setItem('isAdmin','true');
+    goTo('dashboardPage');
+    fetchDataFromSheet();
+  } else {
+    alert('Username atau password salah!');
+  }
+}
+function logoutAdmin(){
+  sessionStorage.removeItem('isAdmin');
+  goTo('homePage');
+}
+function validateAdminSession(){
+  if(sessionStorage.getItem('isAdmin')!=='true'){
+    alert('Silakan login sebagai admin terlebih dahulu.');
+    goTo('loginPage');
+    return false;
+  }
+  return true;
+}
+function fetchDataFromSheet(){
+  if(!validateAdminSession()) return;
+  document.getElementById('loading').style.display='block';
+  fetch(scriptURL+'?action=read').then(res=>res.json()).then(data=>{
+    document.getElementById('loading').style.display='none';
+    renderDashboardData(data);
+  }).catch(()=>{
+    alert('Gagal mengambil data dari Google Sheets');
+    document.getElementById('loading').style.display='none';
+  });
+}
+function renderDashboardData(data){
+  const filter=document.getElementById('filterStatus').value;
+  const filtered=filter==='all'?data:data.filter(d=>d.status===filter);
+  const tbody=document.querySelector('#respondentTable tbody');
+  tbody.innerHTML='';
+  filtered.forEach(d=>{
+    const tr=document.createElement('tr');
+    tr.innerHTML=`<td>${d.nama}</td><td>${d.status}</td><td>${d.gender}</td><td>${d.pendidikan}</td><td>${d.ikm}</td><td>${d.tanggal}</td>`;
+    tbody.appendChild(tr);
+  });
+  const total=filtered.length;
+  const avgIKM=total?filtered.reduce((a,b)=>a+parseFloat(b.ikm),0)/total:0;
+  document.getElementById('dashboardStats').innerHTML=`<p><strong>Total Responden:</strong> ${total}</p><p><strong>Rata-rata IKM:</strong> ${avgIKM.toFixed(2)}%</p>`;
+  renderRespondentStats(data);
+}
+function renderRespondentStats(data){
+  const total=data.length;
+  const male=data.filter(d=>d.gender==='L').length;
+  const female=data.filter(d=>d.gender==='P').length;
+  const pendidikanList=['SD Kebawah','SLTP','SLTA','D1-D2-D3','S-1','S-2','S-3'];
+  const pendidikanCount={};
+  pendidikanList.forEach(p=>pendidikanCount[p]=data.filter(d=>d.pendidikan===p).length);
+  let html=`<div class="stats-card">
+    <div class="stats-header">NAMA LAYANAN : SEMUA LAYANAN</div>
+    <div class="stats-section">RESPONDEN</div>
+    <div class="stats-content">JUMLAH : ${total} ORANG</div>
+    <div class="stats-content">JENIS KELAMIN : L = ${male} ORANG / P = ${female} ORANG</div>
+    <div class="stats-section">PENDIDIKAN</div>`;
+  pendidikanList.forEach(p=>{
+    html+=`<div class="stats-content">${p} : ${pendidikanCount[p]} ORANG</div>`;
+  });
+  html+='</div>';
+  document.getElementById('respondentStats').innerHTML=html;
+}
+function exportCSV(){
+  if(!validateAdminSession()) return;
+  const rows=[...document.querySelectorAll('#respondentTable tr')].map(tr=>[...tr.children].map(td=>td.innerText));
+  let csv=rows.map(r=>r.join(',')).join('\n');
+  const blob=new Blob([csv],{type:'text/csv'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');
+  a.href=url;
+  a.download='data_ikm.csv';
+  a.click();
+  URL.revokeObjectURL(url);
+}
+</script>
+</body>
+</html>
